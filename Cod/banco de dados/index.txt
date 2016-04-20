@@ -1,0 +1,2 @@
+include_once "controller/dbConnection.php";
+var_dump((new connection("localhost","gerenciador_financeiro","root",""))->connect());

@@ -1,0 +1,76 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * Earnings: Isabela
+ * Date: 26/04/2016
+ * Time: 21:37
+ */
+include_once "datebase/dbConnection";
+include_once "model/earnings";
+include_once "model/Request";
+
+class EarningsController
+{
+    public function register($request)
+    {
+        $params = $request->get_params();
+        $earnings = new earnings($params["name"],
+            $params["value"],
+            $params["type"],
+            $params["date"]);
+
+        $db = new connection("localhost","gerenciador_financeiro","root","");
+        $conn = $db->getConnection();
+
+
+        switch ($request->get_method()) {
+            case "GET":
+                return $conn->query($this->generateGetQuery($earnings));
+                break;
+            case "POST":
+                return $conn->query($this->generateInsertQuery($earnings));
+                break;
+            case "PUT":
+                return $conn->query($this->generateUpdateQuery($earnings));
+                break;
+            case "DELETE":
+                return var_dump($conn->query($this->generateDeleteQuery($earnings)));
+                break;
+            default:
+        }
+    }
+
+    private function generateGetQuery($earnings)
+    {
+        $query =  "SELECT * FROM earnings ";
+
+        return $query;
+    }
+
+    private function generateInsertQuery($earnings)
+    {
+        $query =  "INSERT INTO earnings (nme_earnings, value_earnings, type_earnings, date_earnings) VALUES ('".$earnings->getName()."','".
+            $earnings->getValue()."','".
+            $earnings->getType()."','".
+            $earnings->getDate()."')";
+        return $query;
+    }
+
+    private function generateUpdateQuery($earnings)
+    {
+        $query =  "UPDATE earnings SET nme_earnings = '".$earnings->getName().
+            "', value_earnings = '". $earnings->getValue().
+            "',type_earnings = '".$earnings->getType().
+            "',date_earnings = '".$earnings->getDate().
+            "'WHERE id_earnings = '".$earnings->getId()."'";
+
+        return $query;
+    }
+
+    private function generateDeleteQuery($earnings)
+    {
+        $query =  "DELETE FROM earnings WHERE id_earnings = '".$earnings->getId()."'";
+
+        return $query;
+    }
+}

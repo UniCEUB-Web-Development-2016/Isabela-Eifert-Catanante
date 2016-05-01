@@ -1,0 +1,83 @@
+<?php
+include_once "datebase/dbConnection.php";
+include_once "model/user.php";
+include_once "model/Request.php";
+
+class UserController
+{
+
+    public function register($request)
+    {
+        $params = $request->get_params();
+        $user = new user($params["id"],
+            $params["name"],
+            $params["lastName"],
+            $params["email"],
+            $params["pass"],
+            $params["gender"],
+            $params["birthdate"]);
+
+        $db = new connection("localhost","gerenciador_financeiro","root","");
+        $conn = $db->getConnection();
+
+        switch($request->get_method())
+        {
+            case "GET":
+                return $conn->query($this->generateGetQuery($user));
+                break;
+            case "POST":
+                return $conn->query($this->generateInsertQuery($user));
+                break;
+            case "PUT":
+                return $conn->query($this->generateUpdateQuery($user));
+                break;
+            case "DELETE":
+                return var_dump($conn->query($this->generateDeleteQuery($user)));
+                break;
+            default:
+
+        }
+
+
+    }
+
+    private function generateGetQuery($user)
+    {
+        $query =  "SELECT * FROM user ";
+
+        return $query;
+    }
+
+    private function generateInsertQuery($user)
+    {
+        $query =  "INSERT INTO user (nme_user, last_nme_user, email_user, gender_user,  birthdate_user, pass_user) VALUES ('".$user->getName()."','".
+            $user->getLastName()."','".
+            $user->getEmail()."','".
+            $user->getGender()."','".
+            $user->getBirthdate()."','".
+            $user->getPassword()."')";
+
+        return $query;
+    }
+
+
+    private function generateUpdateQuery($user)
+    {
+        $query =  "UPDATE user SET nme_user = '".$user->getName().
+            "',last_nme_user = '".$user->getLastName().
+            "', email_user = '".$user->getEmail().
+            "', gender_user = '". $user->getGender().
+            "',birthdate_user = '". $user->getBirthdate().
+            "',pass_user = '".$user->getPassword().
+            "'WHERE id_user = '".$user->getId()."'";
+
+        return $query;
+    }
+
+    private function generateDeleteQuery($user)
+    {
+        $query =  "DELETE FROM user WHERE id_user = '".$user->getId()."'";
+
+        return $query;
+    }
+}

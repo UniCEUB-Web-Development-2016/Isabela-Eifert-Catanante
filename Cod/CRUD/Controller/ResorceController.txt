@@ -1,0 +1,36 @@
+include_once "controller/PlanningController.php";
+
+
+
+
+
+class ResourceController
+{
+    private $controlMap =
+        [
+            "user" => "UserController",
+            "earnings" => "EarningsController",
+            "discount" => "DiscountController",
+            "planning" => "PlanningController",
+        ];
+
+    public function getResource($request)
+    {
+        return (new $this->controlMap[$request->get_resource()]())->register($request); //não ta certo
+    }
+    
+    public function createResource($request)
+    {
+        return (new $this->controlMap[$request->get_resource()]())->register($request);
+    }
+    
+    public function updateResource($request)
+    {
+        return (new $this->controlMap[$request->get_resource()]())->register($request); //não ta certo
+    }
+
+    public function deleteResource($request)
+    {
+        return (new $this->controlMap[$request->get_resource()]())->register($request); //não ta certo
+    }
+}

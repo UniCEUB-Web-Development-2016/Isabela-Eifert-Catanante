@@ -1,0 +1,107 @@
+<?php
+include_once "datebase/dbConnection.php";
+include_once "model/user.php";
+include_once "model/Request.php";
+include_once "controller/UserValidate.php";
+
+class UserController
+{
+    private $requiredParameters = [
+        "name" ,"lastName","email","pass","gender","birthdate"
+    ];
+
+    private function connect()
+    {
+        $db = new connection("localhost","gerenciador_financeiro","root","");
+        return $db->getConnection();
+
+    }
+
+    public function register($request)
+    {
+        $params = $request->get_params();
+
+        $validateUser = new UserValidate($this->requiredParameters);
+        if( $validateUser->isValid($params) == true )
+        {
+            $user = new user($params["name"],
+                $params["lastName"],
+                $params["email"],
+                $params["pass"],
+                $params["gender"],
+                $params["birthdate"]);
+        }
+
+
+        switch($request->get_method())
+        {
+            case "GET":
+                return $this->connect()->query($this->generateGetQuery($user));
+                break;
+            case "POST":
+                return $this->connect()->query($this->generateInsertQuery($user));
+                break;
+            case "PUT":
+                return $this->connect()->query($this->generateUpdateQuery($user));
+                break;
+            case "DELETE":
+                return $this->connect()->query($this->generateDeleteQuery($user));
+                break;
+            default:
+
+        }
+
+
+    }
+
+    private function generateInsertQuery($user)
+    {
+        $query =  "INSERT INTO user (nme_user, last_nme_user, email_user, gender_user,  birthdate_user, pass_user) VALUES ('".$user->getName()."','".
+            $user->getLastName()."','".
+            $user->getEmail()."','".
+            $user->getGender()."','".
+            $user->getBirthdate()."','".
+            $user->getPassword()."')";
+
+        return $query;
+    }
+
+
+    private function generateUpdateQuery($user)
+    {
+        $query =  "UPDATE user SET nme_user = '".$user->getName().
+            "',last_nme_user = '".$user->getLastName().
+            "', email_user = '".$user->getEmail().
+            "', gender_user = '". $user->getGender().
+            "',birthdate_user = '". $user->getBirthdate().
+            "',pass_user = '".$user->getPassword().
+            "'WHERE id_user = '".$user->getId()."'";
+
+        return $query;
+    }
+
+    private function generateDeleteQuery($user)
+    {
+        $query =  "DELETE FROM user WHERE id_user = '".$user->getId()."'";
+
+        return $query;
+    }
+
+    public function search($request)
+    {
+        $params = $request->get_params();
+
+       // return $this->connect()->query("SELECT nme_user, last_nme_user, email_user, gender_user, birthdate_user FROM user WHERE ".$this->generateCriteria($params))->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+    private function generateCriteria($params)
+    {
+        $criteria = "";
+        foreach($params as $key => $value)
+        {
+            $criteria = $criteria.$key." LIKE '%".$value."%' OR ";
+        }
+        return substr($criteria, 0, -4);
+    }
+    
+}

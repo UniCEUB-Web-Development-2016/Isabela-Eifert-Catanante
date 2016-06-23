@@ -11,3 +11,5 @@
 
 
     echo "cadastrado com sucesso!";
+
+    header('location: http://localhost/client/html/home.html');

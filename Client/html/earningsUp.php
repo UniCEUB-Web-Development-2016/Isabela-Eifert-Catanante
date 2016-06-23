@@ -85,8 +85,9 @@
             include '../control/httpful.phar'; 
 
 
-            $response = \Httpful\Request::get("http://localhost/GerenciadorFinanceiro/earnings/?nme_earnings={$_POST['nme_earnings']}&value_earnings={$_POST['value_earnings']}&date_earnings={$_POST['date_earnings']}&type_earnings={$_POST['type_earnings']}")->send();
+            $response = \Httpful\Request::get("http://localhost/GerenciadorFinanceiro/earnings/?nme_earnings={$_GET['nme_earnings']}&value_earnings={$_POST['value_earnings']}&date_earnings={$_POST['date_earnings']}&type_earnings={$_POST['type_earnings']}")->send();
             
+            var_dump($response);
 
             $request_response = json_decode($response->body);
 

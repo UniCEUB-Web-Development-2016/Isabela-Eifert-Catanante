@@ -70,7 +70,7 @@
 <div class="container-fluid text-center">
     <div class="row content">
         <div class="col-sm-2 sidenav">
-            <p><a href="earnings.html">Inserir Renda</a></p>
+            <p><a href="discount.html">Inserir Renda</a></p>
             <p><a href="discount.html">Inserir Despesa</a></p>
             <p><a href="planning.html">Realizar Planejamento</a></p>
         </div>
@@ -78,8 +78,22 @@
             <h1>Gerenciador Financeiro</h1>
             <p>Descrever o Sistema</p>
             <hr>
-            <h3>Janeiro</h3>
-            <p>Graficos do mês de janeiro ****tavez****</p>
+            <h3>Despesa</h3>
+            <h3>Renda</h3>
+            <form action="../control/discountControl.php" method="post">
+                Nome do rendimento: <input name="nme_discount" type="text"/>
+                <br>
+                Valor: <input name="value_discount" type="number"/>
+                <!--Confirmar Email: <input name="email_conf" type="text"/> -->
+                <br>
+                Data do redimento: <input name="date_discount" type="date"/>
+                <br>
+                <p> Tipo de despesa </p>
+                <input type="radio" name="type_discount" value="mensal" checked> Mensal <br>
+                <input type="radio" name="type_discount" value="unico"> Unico <br>
+                <input type="submit" value="Cadastrar"/>
+
+            </form>
         </div>
         <div class="col-sm-2 sidenav">
             <div class="well">

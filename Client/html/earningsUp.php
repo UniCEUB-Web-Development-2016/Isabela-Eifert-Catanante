@@ -55,7 +55,7 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="active"><a href="home.html">Home</a></li>
                 <li><a href="about.html">Sobre nós</a></li>
                 <li><a href="contact.html">Contato</a></li>
                 <li><a href="faq.html">FAQ</a></li>
@@ -71,30 +71,61 @@
     <div class="row content">
         <div class="col-sm-2 sidenav">
             <p><a href="earnings.html">Inserir Renda</a></p>
-            <p><a href="planning.html">Inserir Despesa</a></p>
-            <p><a href="discount.html">Realizar Planejamento</a></p>
+            <p><a href="discount.html">Inserir Despesa</a></p>
+            <p><a href="planning.html">Realizar Planejamento</a></p>
         </div>
         <div class="col-sm-8 text-left">
             <h1>Gerenciador Financeiro</h1>
             <p>Descrever o Sistema</p>
             <hr>
-            <h3>Planejamento</h3>
-            <form action="../control/planningControl.php" method="post">
-                Nome do rendimento: <input name="nme_planning" type="text"/>
+            <h3>Renda</h3>
+
+            <?php 
+
+            include '../control/httpful.phar'; 
+
+
+            $response = \Httpful\Request::get("http://localhost/GerenciadorFinanceiro/earnings/?nme_earnings={$_POST['nme_earnings']}&value_earnings={$_POST['value_earnings']}&date_earnings={$_POST['date_earnings']}&type_earnings={$_POST['type_earnings']}")->send();
+            
+
+            $request_response = json_decode($response->body);
+
+            var_dump($request_response);
+            die();
+
+                foreach($request_response as $value)
+                {
+                    $nme_earnings=$value->nme_earnings;
+                }
+                foreach($request_response as $value)
+                {
+                    $value_earnings=$value->$value_earnings;
+                }
+                foreach($request_response as $value)
+                {
+                    $date_earnings=$value->date_earnings;
+                }
+                foreach($request_response as $value)
+                {
+                    $type_earnings=$value->type_earnings;
+                }
+            ?>
+
+
+            <form action="control/earningsUp.php" method="POST">
+                Nome do rendimento: <input name="nme_earnings" type="text" value="<?php echo $nme_earnings ; ?> " >
                 <br>
-                Valor Atual: <input name="current_value" type="number"/>
+                Valor: <input name="value_earnings" type="number" value="<?php echo $value_earnings; ?> " >
                 <br>
-                Valor Final: <input name="final_value" type="number"/>
+                Data do redimento: <input name="date_earnings" type="date" value="<?php echo $date_earnings; ?> " >
                 <br>
-                Data Inicial do Planejamento: <input name="inital_date" type="date"/>
-                <br>
-                Data Final do Planejamento: <input name="final_date" type="date"/>
-                <br>
-                Descrição: <input name="description" type="text"/>
-                <br>
-                <input type="submit" value="Cadastrar"/>
+                <p> Tipo de redimento </p>
+                <input type="radio" name="type_earnings" value="mensal" checked value="<?php echo $type_earnings; ?> " > Mensal <br>
+                <input type="radio" name="type_earnings" value="unico" value="<?php echo $type_earnings; ?> " >  Unico <br>
+                <input type="submit" value="Alterar"/>
 
             </form>
+            <p></p>
         </div>
         <div class="col-sm-2 sidenav">
             <div class="well">

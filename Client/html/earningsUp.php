@@ -59,6 +59,7 @@
                 <li><a href="about.html">Sobre nós</a></li>
                 <li><a href="contact.html">Contato</a></li>
                 <li><a href="faq.html">FAQ</a></li>
+                <li><a href="pesquisa.html">Pesquisa</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -80,49 +81,50 @@
             <hr>
             <h3>Renda</h3>
 
+<!-- 
             <?php 
 
-            include '../control/httpful.phar'; 
+            //include '../control/httpful.phar'; 
 
 
-            $response = \Httpful\Request::get("http://localhost/GerenciadorFinanceiro/earnings/?nme_earnings={$_GET['nme_earnings']}&value_earnings={$_POST['value_earnings']}&date_earnings={$_POST['date_earnings']}&type_earnings={$_POST['type_earnings']}")->send();
+            //$response = \Httpful\Request::get("http://localhost/GerenciadorFinanceiro/earnings/?nme_earnings={$_GET['nme_earnings']}&value_earnings={$_POST['value_earnings']}&date_earnings={$_POST['date_earnings']}&type_earnings={$_POST['type_earnings']}")->send();
             
-            var_dump($response);
+          
 
-            $request_response = json_decode($response->body);
+            //$request_response = json_decode($response->body);
 
-            var_dump($request_response);
-            die();
 
-                foreach($request_response as $value)
+                //foreach($request_response as $value)
                 {
                     $nme_earnings=$value->nme_earnings;
                 }
-                foreach($request_response as $value)
+                //foreach($request_response as $value)
                 {
                     $value_earnings=$value->$value_earnings;
                 }
-                foreach($request_response as $value)
+                //foreach($request_response as $value)
                 {
                     $date_earnings=$value->date_earnings;
                 }
-                foreach($request_response as $value)
+                //foreach($request_response as $value)
                 {
                     $type_earnings=$value->type_earnings;
                 }
             ?>
+-->
 
+            <form action="control/updateEarnings.php" enctype="multipart/form-data" method="post">
 
-            <form action="control/earningsUp.php" method="POST">
-                Nome do rendimento: <input name="nme_earnings" type="text" value="<?php echo $nme_earnings ; ?> " >
+                Nome do rendimento: <input name="nme_earnings" type="text"  >
                 <br>
-                Valor: <input name="value_earnings" type="number" value="<?php echo $value_earnings; ?> " >
+                Valor: <input name="value_earnings" type="number">
                 <br>
-                Data do redimento: <input name="date_earnings" type="date" value="<?php echo $date_earnings; ?> " >
+                Data do redimento: <input name="date_earnings" type="date">
                 <br>
                 <p> Tipo de redimento </p>
-                <input type="radio" name="type_earnings" value="mensal" checked value="<?php echo $type_earnings; ?> " > Mensal <br>
-                <input type="radio" name="type_earnings" value="unico" value="<?php echo $type_earnings; ?> " >  Unico <br>
+                <input type="radio" name="type_earnings" value="mensal" checked> Mensal <br>
+                <input type="radio" name="type_earnings" value="unico">  Unico <br>
+
                 <input type="submit" value="Alterar"/>
 
             </form>

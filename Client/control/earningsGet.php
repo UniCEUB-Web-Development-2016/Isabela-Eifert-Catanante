@@ -1,12 +1,15 @@
 <?php
 
     include('httpful.phar');
-    
-    $url = "http://localhost/gerenciadorfinanceiro/earnings/?nme_earnings={$_POST['nme_earnings']}&value_earnings={$_POST['value_earnings']}&type_earnings={$_POST['type_earnings']}&date_earnings={$_POST['date_earnings']}";
+
+    echo $_GET['nme_earnings'];
+   
+    $url = "http://localhost/gerenciadorfinanceiro/earnings/?nme_earnings=".$_POST['nme_earnings'];
     
     $response = \Httpful\Request::get($url)->send();
-    
-        
+
+    $request_response = json_decode($response->body);
+      
     echo "cadastrado com sucesso!";
 
-    header('location: http://localhost/client/html/home.html');
+    header('location: http://localhost/client/html/resultado-pesquisa.php');

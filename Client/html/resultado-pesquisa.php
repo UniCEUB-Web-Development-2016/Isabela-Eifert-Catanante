@@ -43,6 +43,39 @@
 </head>
 <body>
 
+<?php
+
+   include '../control/httpful.phar'; 
+
+    $parametro = $_GET['nme_earnings'];
+    $response = \Httpful\Request::get("http://localhost/gerenciadorfinanceiro/earnings/?nme_earnings=".$parametro)->send();
+    $earning = $response->body;
+    $request_response = utf8_decode($earning);
+
+    json_last_error();
+
+
+    //var_dump($earning);
+    var_dump($request_response);
+   
+    // if(function_exists('json_decode')){
+    //     echo "existe";
+    // }
+
+    //print_r(json_decode(stripslashes($earning)));
+    // $earning = rtrim($earning, "\0");
+    //$earning = stripslashes(html_entity_decode($earning));
+    //$earningDecode = json_decode($earning,true);
+   
+    // foreach($request_response as $value)
+    // {
+    //     $nme_earnings=$value->nme_earnings;
+    // }
+
+
+
+?>
+
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -51,15 +84,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Logo</a>
+            <a class="navbar-brand" href="http://localhost/client/">Gerenciador Financeiro</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="home.html">Home</a></li>
-                <li><a href="about.html">Sobre nós</a></li>
-                <li><a href="contact.html">Contato</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="pesquisa.html">Pesquisa</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -70,46 +98,35 @@
 
 <div class="container-fluid text-center">
     <div class="row content">
-        <div class="col-sm-2 sidenav">
-            <p><a href="earnings.html">Inserir Renda</a></p>
-            <p><a href="discount.html">Inserir Despesa</a></p>
-            <p><a href="planning.html">Realizar Planejamento</a></p>
+        <div class="col-sm-2 sidenav">            
         </div>
         <div class="col-sm-8 text-left">
             <h1>Gerenciador Financeiro</h1>
-            <p>Descrever o Sistema</p>
+            <p>Resultado da pesquisa:</p>
             <hr>
-            <h3>Renda</h3>
-                <form action="../control/earningsControl.php" method="post">
-                    Nome do rendimento: <input name="nme_earnings" type="text"/>
-                    <br>
-                    Valor: <input name="value_earnings" type="number"/>
-                   <!--Confirmar Email: <input name="email_conf" type="text"/> -->
-                    <br>
-                    Data do redimento: <input name="date_earnings" type="date"/>
-                    <br>
-                    <p> Tipo de redimento </p>
-                    <input type="radio" name="type_earnings" value="mensal" checked> Mensal <br>
-                    <input type="radio" name="type_earnings" value="unico"> Unico <br>
-                    <input type="submit" value="Cadastrar"/>
-
-                </form>
-            <p></p>
+            <table class="table table-condensed">
+                <tr>
+                <th>Firstname</th>
+                <th>Lastname</th> 
+                <th>Points</th>
+              </tr>
+              <tr>
+                <td value="<?php nme_earnings ?>"> </td>
+                <td>Jackson</td> 
+                <td>94</td>
+              </tr>
+              <tr>
+                <td>Eve</td>
+                <td>Jackson</td> 
+                <td>94</td>
+              </tr>
+            </table>
+            
         </div>
         <div class="col-sm-2 sidenav">
-            <div class="well">
-                <p>ADS</p>
-            </div>
-            <div class="well">
-                <p>ADS</p>
-            </div>
         </div>
     </div>
 </div>
-
-<footer class="container-fluid text-center">
-    <p>Footer Text</p>
-</footer>
 
 </body>
 </html>

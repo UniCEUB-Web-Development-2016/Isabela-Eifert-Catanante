@@ -81,37 +81,37 @@
             <hr>
             <h3>Renda</h3>
 
-<!-- 
-            <?php 
+<?php
 
-            //include '../control/httpful.phar'; 
+   include '../control/httpful.phar'; 
+
+    $parametro = $_GET['nme_earnings'];
+    $response = \Httpful\Request::get("http://localhost/gerenciadorfinanceiro/earnings/?nme_earnings=".$parametro)->send();
+
+    $contents = $response->body;
+    $contents = utf8_encode($contents);
+    $contents = substr($contents, 23, -1); //retira o connect da string e o ultimo caractere
+    $request_response = json_decode($contents);
 
 
-            //$response = \Httpful\Request::get("http://localhost/GerenciadorFinanceiro/earnings/?nme_earnings={$_GET['nme_earnings']}&value_earnings={$_POST['value_earnings']}&date_earnings={$_POST['date_earnings']}&type_earnings={$_POST['type_earnings']}")->send();
-            
-          
-
-            //$request_response = json_decode($response->body);
-
-
-                //foreach($request_response as $value)
+                foreach($request_response as $value)
                 {
                     $nme_earnings=$value->nme_earnings;
                 }
-                //foreach($request_response as $value)
+                foreach($request_response as $value)
                 {
                     $value_earnings=$value->$value_earnings;
                 }
-                //foreach($request_response as $value)
+                foreach($request_response as $value)
                 {
                     $date_earnings=$value->date_earnings;
                 }
-                //foreach($request_response as $value)
+                foreach($request_response as $value)
                 {
                     $type_earnings=$value->type_earnings;
                 }
             ?>
--->
+
 
             <form action="control/updateEarnings.php" enctype="multipart/form-data" method="post">
 

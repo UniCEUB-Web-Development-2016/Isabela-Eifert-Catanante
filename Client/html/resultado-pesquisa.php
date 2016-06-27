@@ -49,28 +49,39 @@
 
     $parametro = $_GET['nme_earnings'];
     $response = \Httpful\Request::get("http://localhost/gerenciadorfinanceiro/earnings/?nme_earnings=".$parametro)->send();
-    $earning = $response->body;
-    $request_response = utf8_decode($earning);
 
-    json_last_error();
+    $contents = $response->body;
+    $contents = utf8_encode($contents);
+    $contents = substr($contents, 23, -1); //retira o connect da string e o ultimo caractere
+    $request_response = json_decode($contents);
 
-
-    //var_dump($earning);
-    var_dump($request_response);
    
-    // if(function_exists('json_decode')){
-    //     echo "existe";
-    // }
+    foreach($request_response as $key => $value)
+    {
+        if($key == 'nme_earnings')
+            $nme_earnings=$value;
+        //var_dump($nme_earnings);
+    }
+    foreach($request_response as $key => $value)
+    {
+        if($key == 'value_earnings')
+            $value_earnings=$value;
+        //var_dump($value_earnings);
+    }    
 
-    //print_r(json_decode(stripslashes($earning)));
-    // $earning = rtrim($earning, "\0");
-    //$earning = stripslashes(html_entity_decode($earning));
-    //$earningDecode = json_decode($earning,true);
-   
-    // foreach($request_response as $value)
-    // {
-    //     $nme_earnings=$value->nme_earnings;
-    // }
+    foreach($request_response as $key => $value)
+    {
+        if($key == 'type_earnings')
+            $type_earnings=$value;
+        //var_dump($type_earnings);
+    }
+    foreach($request_response as $key => $value)
+    {
+        if($key == 'date_earnings')
+            $date_earnings=$value;
+        // var_dump($date_earnings);
+        // die();
+    }
 
 
 
@@ -106,20 +117,30 @@
             <hr>
             <table class="table table-condensed">
                 <tr>
-                <th>Firstname</th>
-                <th>Lastname</th> 
-                <th>Points</th>
+                <th>Nome do Redimento</th>
+                <th>Valor</th> 
+                <th>Tipo</th>
+                <th>Data</th>
+                <th>Ação</th>
               </tr>
               <tr>
-                <td value="<?php nme_earnings ?>"> </td>
-                <td>Jackson</td> 
-                <td>94</td>
+                <form action="earningsUp.php" method="post">
+                <td> <?php echo $nme_earnings; ?> </td>
+                <td> <?php echo $value_earnings; ?> </td> 
+                <td> <?php echo $type_earnings; ?> </td>
+                <td> <?php echo $date_earnings; ?>  </td>
+                <td>         
+                    <input type="submit" value="Editar"/>
+                </form>
+                    
               </tr>
               <tr>
-                <td>Eve</td>
-                <td>Jackson</td> 
-                <td>94</td>
+                <td> <?php echo $nme_earnings; ?> </td>
+                <td> <?php echo $value_earnings; ?> </td> 
+                <td> <?php echo $type_earnings; ?> </td>
+                <td> <?php echo $date_earnings; ?>  </td>
               </tr>
+
             </table>
             
         </div>

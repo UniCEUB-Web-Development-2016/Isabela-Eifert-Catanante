@@ -93,37 +93,76 @@
     $contents = substr($contents, 23, -1); //retira o connect da string e o ultimo caractere
     $request_response = json_decode($contents);
 
+//var_dump($contents);
+                foreach($request_response as $key=>$value)
+                {
+                    if($key == 'nme_earnings')
+                        $nme_earnings=$value;
+                }
+                foreach($request_response as $key=>$value)
+                {
+                    if($key == 'value_earnings')
+                        $value_earnings = $value;
+                }
+                foreach($request_response as $key=>$value)
+                {
+                    if($key == 'date_earnings')
+                        $date_earnings=$value;
 
-                foreach($request_response as $value)
-                {
-                    $nme_earnings=$value->nme_earnings;
+
                 }
-                foreach($request_response as $value)
+                foreach($request_response as $key=>$value)
                 {
-                    $value_earnings=$value->$value_earnings;
+                    if($key == 'type_earnings')
+                    {
+                        $type_earnings=$value;
+                    }
+                                
                 }
-                foreach($request_response as $value)
+/**
+* 
+*/
+                class Tentativa
                 {
-                    $date_earnings=$value->date_earnings;
+                    
+                    public function getRadio($type_earnings)
+                     {
+                        if($type_earnings == 'mensal')
+                        {
+                            return 'checked';
+                        }
+                        if($type_earnings == 'unico')
+                        {
+                            return 'checked';
+                        }
+                    }
                 }
-                foreach($request_response as $value)
-                {
-                    $type_earnings=$value->type_earnings;
-                }
+                
             ?>
 
 
-            <form action="control/updateEarnings.php" enctype="multipart/form-data" method="post">
+            <form action="control/updateEarnings.php" method="post">
 
-                Nome do rendimento: <input name="nme_earnings" type="text"  >
+                Nome do rendimento: <input name="nme_earnings" type="text" value=<?php echo $nme_earnings; ?> >
                 <br>
-                Valor: <input name="value_earnings" type="number">
+                Valor: <input name="value_earnings" type="number" value=<?php echo $value_earnings; ?> >
                 <br>
-                Data do redimento: <input name="date_earnings" type="date">
+                Data do redimento: <input name="date_earnings" type="date" value=<?php echo $date_earnings; ?> >
                 <br>
                 <p> Tipo de redimento </p>
-                <input type="radio" name="type_earnings" value="mensal" checked> Mensal <br>
-                <input type="radio" name="type_earnings" value="unico">  Unico <br>
+
+                <input type="radio" name="type_earnings" value="mensal" 
+                    <?php 
+                        // $test = new Tentativa(); 
+                        // $test->getRadio($type_earnings); 
+                    ?> 
+                > Mensal <br>
+                <input type="radio" name="type_earnings" value="unico" 
+                    <?php
+                        // $test = new Tentativa(); 
+                        // $test->getRadio($type_earnings); 
+                    ?> 
+                >  Unico <br>
 
                 <input type="submit" value="Alterar"/>
 

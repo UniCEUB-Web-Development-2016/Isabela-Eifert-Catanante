@@ -43,5 +43,5 @@ class ResourceController
     public function deleteResource($request)
     {
         return (new $this->controlMap[$request->get_resource()]())->delete($request); //
-    }
+    }   
 }

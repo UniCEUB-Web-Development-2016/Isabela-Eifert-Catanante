@@ -47,7 +47,7 @@ class EarningsController
         foreach ($params as $key => $value) {
             $result = $this->connect()->query("UPDATE earnings SET " . $key . " =  '" . $value . "' WHERE nme_earnings = '" . $params["nme_earnings"] . "'");
         }
-        return $result;
+        return $result; 
     }
 
     public function search($request)
@@ -75,4 +75,6 @@ class EarningsController
         }
         return substr($criteria, 0, -4);
     }
+
+
 }

@@ -48,7 +48,7 @@ class UserController
         $params = $request->get_params();
         
         foreach ($params as $key => $value) {
-            $result = $this->connect()->query("UPDATE user SET " . $key . " =  '" . $value . "' WHERE email_user = teste@teste'"); // . $params["email_user"] . "'"
+            $result = $this->connect()->query("UPDATE user SET " . $key . " = " . $value . " WHERE email_user =" . $params["email_user"] );
         }
         return $result;
     }

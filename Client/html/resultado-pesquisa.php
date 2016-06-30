@@ -40,7 +40,7 @@
             .row.content {height:auto;}
         }
     </style>
-</head>
+</head> 
 <body>
 
 <?php
@@ -133,12 +133,6 @@
                     <input type="submit" value="Editar"/>
                 </form>
                     
-              </tr>
-              <tr>
-                <td> <?php echo $nme_earnings; ?> </td>
-                <td> <?php echo $value_earnings; ?> </td> 
-                <td> <?php echo $type_earnings; ?> </td>
-                <td> <?php echo $date_earnings; ?>  </td>
               </tr>
 
             </table>

@@ -9,121 +9,53 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 
-<?php
+<!-- Carregar a API do google -->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-    // include ('../control/httpful.phar');
-        
-    //         $urlEarnings = "http://localhost/gerenciadorfinanceiro/earnings/?nme_earnings=&value_earnings=&type_earnings=&date_earnings=";
-    //         $urlDiscount = "http://localhost/gerenciadorfinanceiro/discount/?nme_discount=&value_discount=&type_discount=&date_discount=";
-
-    //         $mandarUrl = new TransoformarURL;
-    //         $earnings = $mandarUrl->transfomar($urlEarnings);
-    //         $discount = $mandarUrl->transfomar($urlDiscount);
-        
-    // class TransoformarURL
-    // {
-    //     private $value;
-    //     private $key;
-    //     private $totalEarnings = 0;
-    //     private $totalDiscount = 0;
-
-    //     public function transfomar($url)
-    //     {
-    //         $response = \Httpful\Request::get($url)->send();
-
-    //         $contents = $response->body;
-    //         $contents = utf8_encode($contents);
-    //         $contents = substr($contents, 23, -1); //retira o connect da string e o ultimo caractere
-            
-    //         $contentsArray = $this->replace($contents);
-    //         $request_response = $this->separarJson($contentsArray);
-
-    //     } 
-
-    //     public function replace($string)
-    //     {
-    //         $todasStrings = str_replace ("}," , "} ** " , $string); //substituir "}," por "} ** "
-    //         $arrayTodasStrings = explode("**", $todasStrings);
-
-    //         return $arrayTodasStrings;
-    //     }
-
-    //      public function separarJson($array)
-    //     {
-    //         foreach ($array as $key => $value) 
-    //         {
-    //             $request_response = json_decode($value);
-    //             //var_dump($request_response);
-    //             foreach ($request_response as $key => $value) 
-    //             {
-    //                 $this->set_key = $key;
-    //                 $this->set_value = $value;                
-
-    //                 if ($key == 'value_earnings') 
-    //                 {
-    //                     $this->set_totalEarnings($value);
-    //                 }
-
-    //                 if($key == 'value_discount')
-    //                 {
-    //                     $this->set_totalDiscount($value);
-    //                 }
-    //             }                
-    //         }
-    //     }
-
-    //     public function set_totalEarnings($valor)
-    //     { 
-    //         $this->totalEarnings += $valor;
-    //     }
-    //     public function get_totalEarnings()
-    //     {
-    //         return $this->totalEarnings;
-    //     }
-
-    //     public function set_totalDiscount($valor)
-    //     { 
-    //         $this->totalDiscount += $valor;
-    //     }
-    //     public function get_totalDiscount()
-    //     {
-    //         return $this->totalDiscount;
-            
-    //     }
-    // }
-
-    ?>
-    
-   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!-- Preparar a geracao do grafico -->
     <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Tipo de Renda', 'Hours per Day'],
-          ['Renda', <?php                     
-                    $objeto = new TrasnformarURL;
-                    echo $objeto->get_totalEarnings;
-                    ?>  ],
-          ['Despesa',     <?php                     
-                    $objeto = new TrasnformarURL;
-                    echo $objeto->get_totalDiscount;
-                    ?>  ],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
-        ]);
 
-        var options = {
-          title: '',
-          pieHole: 0.4,
+      // Carregar a API de visualizacao e os pacotes necessarios.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Especificar um callback para ser executado quando a API for carregada.
+      google.setOnLoadCallback(desenharGrafico);
+
+      /**
+       * Funcao que preenche os dados do grafico
+       */
+       function drawChart() {
+      var jsonData = $.ajax({
+          <?php
+            include '../control/grafico.php';
+
+            $objeto = new DevolverArray;
+            echo $objeto->arrayloura();
+            
+          ?>
+          }).responseText;
+          
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(jsonData);
+
+        // Configuracoes do grafico
+        var config = {
+            'title':'Quantidade de alunos por gênero',
+            'width':400,
+            'height':300
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
+        // Instanciar o objeto de geracao de graficos de pizza,
+        // informando o elemento HTML onde o grafico sera desenhado.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, {width: 400, height: 240});
+
+        // Desenhar o grafico (usando os dados e as configuracoes criadas)
+        chart.draw(dados, config);
       }
     </script>
-
+    
+   
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
         .navbar {
@@ -158,7 +90,9 @@
         }
     </style>
 </head>
+
 <body>
+    
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -203,7 +137,7 @@
             </div>
             <hr>
             <h3>Gráficos</h3>
-            <div id="donutchart" style="width: 900px; height: 500px;"></div>
+            <div id="area_grafico"></div>
             
 
         </div>

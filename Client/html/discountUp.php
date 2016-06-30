@@ -71,7 +71,7 @@
 <div class="container-fluid text-center">
     <div class="row content">
         <div class="col-sm-2 sidenav">
-            <p><a href="earnings.html">Inserir Renda</a></p>
+            <p><a href="discount.html">Inserir Renda</a></p>
             <p><a href="discount.html">Inserir Despesa</a></p>
             <p><a href="planning.html">Realizar Planejamento</a></p>
         </div>
@@ -85,8 +85,8 @@
 
    include '../control/httpful.phar'; 
 
-    $parametro = $_GET['nme_earnings'];
-    $response = \Httpful\Request::get("http://localhost/gerenciadorfinanceiro/earnings/?nme_earnings=".$parametro)->send();
+    $parametro = $_GET['nme_discount'];
+    $response = \Httpful\Request::get("http://localhost/gerenciadorfinanceiro/discount/?nme_discount=".$parametro)->send();
 
     $contents = $response->body;
     $contents = utf8_encode($contents);
@@ -96,26 +96,26 @@
 //var_dump($contents);
                 foreach($request_response as $key=>$value)
                 {
-                    if($key == 'nme_earnings')
-                        $nme_earnings=$value;
+                    if($key == 'nme_discount')
+                        $nme_discount=$value;
                 }
                 foreach($request_response as $key=>$value)
                 {
-                    if($key == 'value_earnings')
-                        $value_earnings = $value;
+                    if($key == 'value_discount')
+                        $value_discount = $value;
                 }
                 foreach($request_response as $key=>$value)
                 {
-                    if($key == 'date_earnings')
-                        $date_earnings=$value;
+                    if($key == 'date_discount')
+                        $date_discount=$value;
 
 
                 }
                 foreach($request_response as $key=>$value)
                 {
-                    if($key == 'type_earnings')
+                    if($key == 'type_discount')
                     {
-                        $type_earnings=$value;
+                        $type_discount=$value;
                     }
                                 
                 }
@@ -125,13 +125,13 @@
                 class Tentativa
                 {
                     
-                    public function getRadio($type_earnings)
+                    public function getRadio($type_discount)
                      {
-                        if($type_earnings == 'mensal')
+                        if($type_discount == 'mensal')
                         {
                             return 'checked';
                         }
-                        if($type_earnings == 'unico')
+                        if($type_discount == 'unico')
                         {
                             return 'checked';
                         }
@@ -141,26 +141,26 @@
             ?>
 
 
-            <form action="../earningsUpControl.php" method="post">
+            <form action="../discountUpControl.php" method="post">
 
-                Nome do rendimento: <input name="nme_earnings" type="text" value=<?php echo $nme_earnings; ?> >
+                Nome do rendimento: <input name="nme_discount" type="text" value=<?php echo $nme_discount; ?> >
                 <br>
-                Valor: <input name="value_earnings" type="number" value=<?php echo $value_earnings; ?> >
+                Valor: <input name="value_discount" type="number" value=<?php echo $value_discount; ?> >
                 <br>
-                Data do redimento: <input name="date_earnings" type="date" value=<?php echo $date_earnings; ?> >
+                Data do redimento: <input name="date_discount" type="date" value=<?php echo $date_discount; ?> >
                 <br>
                 <p> Tipo de redimento </p>
 
-                <input type="radio" name="type_earnings" value="mensal" 
+                <input type="radio" name="type_discount" value="mensal" 
                     <?php 
                         // $test = new Tentativa(); 
-                        // $test->getRadio($type_earnings); 
+                        // $test->getRadio($type_discount); 
                     ?> 
                 > Mensal <br>
-                <input type="radio" name="type_earnings" value="unico" 
+                <input type="radio" name="type_discount" value="unico" 
                     <?php
                         // $test = new Tentativa(); 
-                        // $test->getRadio($type_earnings); 
+                        // $test->getRadio($type_discount); 
                     ?> 
                 >  Unico <br>
 

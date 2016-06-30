@@ -97,8 +97,7 @@
 			
 		}
 
-
-
+		
 		public function get_key()
 		{
 			return $this->key;
@@ -116,6 +115,21 @@
 		{
 			$this->value = $variavel;
 		}
+
+		
+		class DevolverArray
+		{
+			
+			public function arrayloucura()
+			{
+				$objeto = new TransoformarURL;
+
+				$arr = array('discount' => $objeto->get_totalDiscount(), 'earnings' => $objeto->get_totalEarnings());
+				return json_encode($arr);
+			
+			}
+		}
+		
 
 	}
 

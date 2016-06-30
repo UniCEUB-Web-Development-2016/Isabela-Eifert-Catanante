@@ -66,14 +66,6 @@
 	//}
 	class TransoformarURL
 	{
-		// private $nme_earnings;
-		// private $value_earnings;
-		// private $type_earnings;
-		// private $date_earnings;
-		// private $nme_discount;
-		// private $value_discount;
-		// private $type_discount;
-		// private $date_discount;
 		private $value;
 		private $key;
 
@@ -117,33 +109,13 @@
 					$this->set_key = $key;
 					$this->set_value = $value;
 
+					
+
+
 				}
-				
-				//return $request_response;
-
-				// if ($key == 'nme_earnings')
-				// 	$this->set_nme_earnings = $value;
-				// if ($key == 'value_earnings')
-				// 	$this->set_value_earnings = $value;
-				// if ($key == 'type_earnings')
-				// 	$this->set_type_earnings = $value;
-				// if ($key == 'date_earnings')
-				// 	$this->set_date_earnings = $value;
-
-				// if ($key == 'nme_discount')
-				// 	$this->set_nme_discount = $value;
-				// if ($key == 'value_discount')
-				// 	$this->set_value_discount = $value;
-				// if ($key == 'type_discount')
-				// 	$this->set_type_discount = $value;
-				// if ($key == 'date_discount')
-				// 	$this->set_date_discount = $value;
 
 			}
 		}
-
-
-
 		public function get_key()
 		{
 			return $this->key;
@@ -161,11 +133,15 @@
 		{
 			$this->value = $variavel;
 		}
-
 	}
-
 	?>
 
+		<script type="text/javascript">
+			$.get("ajax.html"), function(data)
+			{
+				console.log(data);
+			}
+		</script>
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">

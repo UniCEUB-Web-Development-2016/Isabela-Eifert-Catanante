@@ -40,8 +40,52 @@
             .row.content {height:auto;}
         }
     </style>
-</head>
+</head> 
 <body>
+
+<?php
+
+   include '../control/httpful.phar'; 
+
+    $parametro = $_GET['nme_discount'];
+    $response = \Httpful\Request::get("http://localhost/gerenciadorfinanceiro/discount/?nme_discount=".$parametro)->send();
+
+    $contents = $response->body;
+    $contents = utf8_encode($contents);
+    $contents = substr($contents, 23, -1); //retira o connect da string e o ultimo caractere
+    $request_response = json_decode($contents);
+
+   
+    foreach($request_response as $key => $value)
+    {
+        if($key == 'nme_discount')
+            $nme_discount=$value;
+        //var_dump($nme_discount);
+    }
+    foreach($request_response as $key => $value)
+    {
+        if($key == 'value_discount')
+            $value_discount=$value;
+        //var_dump($value_discount);
+    }    
+
+    foreach($request_response as $key => $value)
+    {
+        if($key == 'type_discount')
+            $type_discount=$value;
+        //var_dump($type_discount);
+    }
+    foreach($request_response as $key => $value)
+    {
+        if($key == 'date_discount')
+            $date_discount=$value;
+        // var_dump($date_discount);
+        // die();
+    }
+
+
+
+?>
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -51,15 +95,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Logo</a>
+            <a class="navbar-brand" href="http://localhost/client/">Gerenciador Financeiro</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="home.html">Home</a></li>
-                <li><a href="about.html">Sobre nós</a></li>
-                <li><a href="contact.html">Contato</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="pesquisa.html">Pesquisa</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -70,44 +109,40 @@
 
 <div class="container-fluid text-center">
     <div class="row content">
-        <div class="col-sm-2 sidenav">
-            <p><a href="earnings.html">Inserir Renda</a></p>
-            <p><a href="discount.html">Inserir Despesa</a></p>
-            <p><a href="planning.html">Realizar Planejamento</a></p>
+        <div class="col-sm-2 sidenav">            
         </div>
         <div class="col-sm-8 text-left">
             <h1>Gerenciador Financeiro</h1>
-            <p>Descrever o Sistema</p>
+            <p>Resultado da pesquisa:</p>
             <hr>
-            <h3>Renda</h3>
-                <form action="resultado-pesquisa.php" method="get">
-                    Nome do rendimento: <input name="nme_earnings" type="text"/>
-                    <input type="submit" value="Consultar"/>
+            <table class="table table-condensed">
+                <tr>
+                <th>Nome da Despesa</th>
+                <th>Valor</th> 
+                <th>Tipo</th>
+                <th>Data</th>
+                <th>Ação</th>
+              </tr>
+              <tr>
+                <form action="discountUp.php" method="post">
+                <td> <?php echo $nme_discount; ?> </td>
+                <td> <?php echo $value_discount; ?> </td> 
+                <td> <?php echo $type_discount; ?> </td>
+                <td> <?php echo $date_discount; ?>  </td>
+                <td>         
+                    <input type="submit" value= <?php $nme_discount ?> > </input>
+
                 </form>
+                    
+              </tr>
 
-            <hr>
-            <h3>Despesa</h3>
-            <form action="resultado-pesquisa-Discount.php" method="get">
-                Nome da Despesa: <input name="nme_discount" type="text"/>
-                <input type="submit" value="Consultar"/>
-
-
-            <p></p>
+            </table>
+            
         </div>
         <div class="col-sm-2 sidenav">
-            <div class="well">
-                <p>ADS</p>
-            </div>
-            <div class="well">
-                <p>ADS</p>
-            </div>
         </div>
     </div>
 </div>
 
-<footer class="container-fluid text-center">
-    <p>Footer Text</p>
-</footer>
-
 </body>
-</html
+</html>

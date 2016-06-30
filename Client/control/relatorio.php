@@ -74,6 +74,8 @@
 		// private $value_discount;
 		// private $type_discount;
 		// private $date_discount;
+		private $value;
+		private $key;
 
 		public function transfomar($url)
 		{
@@ -109,100 +111,57 @@
 			foreach ($array as $key => $value) 
 			{
 				$request_response = json_decode($value);
-				var_dump($request_response);
+				//var_dump($request_response);
+				foreach ($request_response as $key => $value) 
+				{
+					$this->set_key = $key;
+					$this->set_value = $value;
+
+				}
+				
 				//return $request_response;
 
-				if ($key == 'nme_earnings')
-					$this->set_nme_earnings = $value;
-				if ($key == 'value_earnings')
-					$this->set_value_earnings = $value;
-				if ($key == 'type_earnings')
-					$this->set_type_earnings = $value;
-				if ($key == 'date_earnings')
-					$this->set_date_earnings = $value;
+				// if ($key == 'nme_earnings')
+				// 	$this->set_nme_earnings = $value;
+				// if ($key == 'value_earnings')
+				// 	$this->set_value_earnings = $value;
+				// if ($key == 'type_earnings')
+				// 	$this->set_type_earnings = $value;
+				// if ($key == 'date_earnings')
+				// 	$this->set_date_earnings = $value;
 
-				if ($key == 'nme_discount')
-					$this->set_nme_discount = $value;
-				if ($key == 'value_discount')
-					$this->set_value_discount = $value;
-				if ($key == 'type_discount')
-					$this->set_type_discount = $value;
-				if ($key == 'date_discount')
-					$this->set_date_discount = $value;
+				// if ($key == 'nme_discount')
+				// 	$this->set_nme_discount = $value;
+				// if ($key == 'value_discount')
+				// 	$this->set_value_discount = $value;
+				// if ($key == 'type_discount')
+				// 	$this->set_type_discount = $value;
+				// if ($key == 'date_discount')
+				// 	$this->set_date_discount = $value;
 
 			}
 		}
 
-		public function get_nme_earnings()
+
+
+		public function get_key()
 		{
-			return $this->nme_earnings;
+			return $this->key;
 		}
-		public function get_value_earnings()
+		private function set_key($variavel)
 		{
-			return $this->value_earnings;
+			$this->key = $variavel;
 		}
-		public function get_type_earnings()
+
+		public function get_value()
 		{
-			return $this->type_earnings;
+			return $this->value;
 		}
-		public function get_date_earnings()
+		private function set_value($variavel)
 		{
-			return $this->date_earnings;
+			$this->value = $variavel;
 		}
-////////////////////////////////////////////////////////////////////////q
-		private function set_nme_earnings($valor)
-		{
-			$this->nme_earnings = $valor;
-		}
-		private function set_value_earnings($valor)
-		{
-			$this->value_earnings = $valor;
-		
-		}
-		private function set_type_earnings($valor)
-		{
-			$this->type_earnings = $valor;
-		}
-		private function set_date_earnings($valor)
-		{
-			$this->date_earnings = $valor;
-		}
-/////////////////////////////////////////////////////////////////q
-		public function get_nme_discount()
-		{
-			return $this->nme_discount;
-		}
-		public function get_value_discount()
-		{
-			return $this->value_discount;
-		}
-		public function get_type_discount()
-		{
-			return $this->type_discount;
-		}
-		public function get_date_discount()
-		{
-			return $this->date_discount;
-		}
-//////////////////////////////////////////////////////
-		private function set_nme_discount($valor)
-		{
-			$this->nme_discount = $valor;
-		}
-		private function set_value_discount($valor)
-		{
-			$this->value_discount = $valor;
-		
-		}
-		private function set_type_discount($valor)
-		{
-			$this->type_discount = $valor;
-		}
-		private function set_date_discount($valor)
-		{
-			$this->date_discount = $valor;
-		}
-		
+
 	}
 
 	?>
@@ -249,7 +208,7 @@
                 <td> 
                 	<?php 
                 		$objeto = new TransoformarURL(); 
-                		echo $objeto->get_nme_earnings; ?> 
+                		echo $objeto->get_key; ?> 
                 </td>
                 <td> <?php echo $value_earnings; ?> </td> 
                 <td> <?php echo $type_earnings; ?> </td>
